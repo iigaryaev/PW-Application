@@ -1,0 +1,49 @@
+﻿@model IEnumerable<PW_Application.Models.PaymentHistoryItemViewModel>
+
+<table class="table-bordered" style="width: 100%">
+    <thead>
+        <tr>
+            <th>Direction</th>
+            <th>Ammount</th>
+            <th>Status</th>
+            <th>User name</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        
+        @foreach (var payment in Model.OrderByDescending(e => e.CreatedUtc))
+        {
+            <tr class="historyItem" id="@payment.Id">
+                <td>
+                    @switch (payment.Direction)
+                    {
+                        case PW_Application.Models.PaymentDirection.In:
+                            <span>In</span>
+                            break;
+                        case PW_Application.Models.PaymentDirection.Out:
+                            <span>Out</span>
+                            break;
+                    }
+                </td>
+                <td>
+                    <span  id="ammount">@payment.Ammount</span> PW
+                </td>
+                <td class = "paymentstate_@payment.State">
+                    @payment.State
+                </td>
+                <td>
+                    <span  id="userName">@payment.OtherUserName</span>
+                </td>
+                <td>
+                    @if (payment.Direction == PW_Application.Models.PaymentDirection.Out)
+                    {
+                        <a href="#" onclick="RepeatPayment(@payment.Id)">Repeat</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+

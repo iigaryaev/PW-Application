@@ -1,0 +1,48 @@
+﻿@model PW_Application.Models.AccountStateViewModel
+@{
+    ViewBag.Title = "PW Application";
+}
+
+@section scripts
+{
+<script src="~/Scripts/PWApplication.js"></script>
+<script>
+    $(document).ready(function () {
+        var timerId = setTimeout(function tick() {
+            UpdateAccountState();
+            timerId = setTimeout(tick, 3000);
+        }, 3000);
+    })
+</script>
+}
+
+<div class="row" style="background: lightgrey;">
+    <div class="col-md-6">
+        <span>Balance: <span id="balance">@Model.Balance</span> PW</span>
+    </div>
+    <div class="col-md-1  col-md-offset-3">
+        <span class="isOnline" id="isOnline">Online</span>
+    </div>
+    <div class="col-md-2">
+        <p>@Model.Name @Html.ActionLink("Logout", "LogOff", "Account")</p>
+    </div>
+</div>
+    
+<div class="row">
+    <div class="col-md-6">
+        <div class="row">
+            <h3>New payment</h3>
+        </div>
+        @Html.Partial("NewPaymentPartial", new PW_Application.Models.NewPayment())
+    </div>
+    <div class="col-md-6 paymentsHistory">
+        <div class="row">
+            <h3>Last payments</h3>
+            <div id="history">
+                @Html.Partial("HistoryPartial", Model.History)
+            </div>
+            
+        </div>
+        
+    </div>
+</div>

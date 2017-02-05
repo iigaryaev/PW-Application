@@ -1,0 +1,43 @@
+﻿@model PW_Application.Models.NewPayment
+    @using (Ajax.BeginForm("MakePayment", "Home", new AjaxOptions() { HttpMethod = "POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "MakePaymentForm" }, 
+        new { @class = "form-horizontal", @Id = "MakePaymentForm" }))
+    {
+        <div class="row">
+            <div class="col-sm-6">
+                @Html.LabelFor(e => e.CorrespondentName)
+            </div>
+            <div class="col-sm-6">
+                @Html.TextBoxFor(e => e.CorrespondentName)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <p style="color: red;">@Html.ValidationMessageFor(e => e.CorrespondentName)</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                @Html.LabelFor(e => e.Ammount)
+            </div>
+            <div class="col-sm-6">
+                @Html.TextBoxFor(e => e.Ammount, new { @type = "number" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <p style="color: red;">@Html.ValidationMessageFor(e => e.Ammount)</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <input type="submit" value="Submit"/>
+            </div>
+        </div>
+
+        if(ViewData["PaymentRequested"] as bool? ?? false)
+        {
+            <div class="row">
+                <span style="color: green">Payment requested sucessfully</span>
+            </div>
+        }
+    }
